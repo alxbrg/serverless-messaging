@@ -40,10 +40,18 @@ def handler(event, _):
             )
 
         # send message over specified medium(s)
-        if email_address:
-            email.send(email_address, body)
-        if phone_number:
-            sms.send(phone_number, body)
+        try:
+            if email_address:
+                email.send(email_address, body)
+            if phone_number:
+                sms.send(phone_number, body)
+        except Exception:  # TODO: handle exceptions more granularly
+            raise ApiError(
+                "Something went wrong when attempting to send the message(s). Make sure that the " +
+                "recipient's email address and phone number are valid.",
+                500,
+                ErrorCodes.MESSAGE_NOT_SENT,
+            )
 
         # store message
         message = store.create(**data)
