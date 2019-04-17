@@ -23,3 +23,7 @@ def params(predicates, data):
 
 def is_non_empty_string(value):
     return isinstance(value, str) and value.strip() != ''
+
+
+def is_nil_or_non_empty_string(value):
+    return value is None or is_non_empty_string(value)
