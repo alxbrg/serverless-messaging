@@ -43,7 +43,7 @@ def format_message(message):
     return message
 
 
-def create(recipient, body, email_address=None, phone_number=None):
+def create(recipient, body, email_address=None, phone_number=None, **kwargs):
     ensure_table_exists()
 
     message = Message(
