@@ -1,5 +1,5 @@
 {
-  "name": "messaging",
+  "name": "serverless-messaging",
   "version": "0.1.0",
   "description": "Serverless messaging API",
   "author": "Alexandre Borrego <alex@borrego.io>",
@@ -10,7 +10,8 @@
   },
   "scripts": {
     "start": "docker run -p 8000:8000 amazon/dynamodb-local & dotenv sls offline",
-    "test": "python -m pytest --disable-pytest-warnings tests/ -v"
+    "test": "python -m pytest --disable-pytest-warnings tests/ -v",
+    "deploy": "dotenv sls deploy --verbose"
   },
   "devDependencies": {
     "dotenv-cli": "^2.0.0",

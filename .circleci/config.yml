@@ -1,0 +1,79 @@
+version: 2
+
+defaults: &defaults
+  working_directory: ~/repo
+  docker:
+    - image: nikolaik/python-nodejs
+
+jobs:
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+
+      # download and cache dependencies
+      - restore_cache:
+          keys:
+            - python-dependencies-{{ checksum "requirements.txt" }}
+            # fallback to using the latest cache if no exact match is found
+            - python-dependencies-
+
+      - run:
+          name: Installing python dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements.txt
+
+      - run:
+          name: Installing npm dependencies
+          command: npm install
+
+      - save_cache:
+          paths:
+            - ./venv
+          key: python-dependencies-{{ checksum "requirements.txt" }}
+
+      - persist_to_workspace:
+          root: ~/
+          paths: repo
+
+  test:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/
+
+      - run:
+          name: Running tests
+          command: |
+            . venv/bin/activate
+            npm run test
+
+  deploy:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/
+
+      - run:
+          name: Deploying
+          command: npm run deploy
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - build
+
+      - test:
+          requires:
+            - build
+
+      - deploy:
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                - master
