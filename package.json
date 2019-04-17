@@ -9,10 +9,11 @@
     "url": "https://github.com/alxbrg/serverless-messaging.git"
   },
   "scripts": {
-    "start": "sls offline",
+    "start": "docker run -p 8000:8000 amazon/dynamodb-local & dotenv sls offline",
     "test": "python -m pytest --disable-pytest-warnings tests/ -v"
   },
   "devDependencies": {
+    "dotenv-cli": "^2.0.0",
     "serverless": "^1.40.0",
     "serverless-offline": "^4.9.4",
     "serverless-python-requirements": "^4.3.0"
