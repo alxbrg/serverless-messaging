@@ -1,0 +1,19 @@
+{
+  "name": "messaging",
+  "version": "0.1.0",
+  "description": "Serverless messaging API",
+  "author": "Alexandre Borrego <alex@borrego.io>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alxbrg/serverless-messaging.git"
+  },
+  "scripts": {
+    "start": "sls offline"
+  },
+  "devDependencies": {
+    "serverless": "^1.40.0",
+    "serverless-offline": "^4.9.4",
+    "serverless-python-requirements": "^4.3.0"
+  }
+}

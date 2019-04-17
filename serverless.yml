@@ -1,0 +1,50 @@
+service: serverless-messaging
+
+frameworkVersion: '>=1.1.0 <2.0.0'
+
+custom:
+  pythonRequirements:
+    dockerizePip: true
+
+provider:
+  name: aws
+  region: eu-west-1
+  runtime: python3.7
+
+functions:
+  getMessages:
+    handler: messaging/handlers/messages_get.handler
+    events:
+      - http:
+          path: messages
+          method: get
+          cors: true
+
+  postMessages:
+    handler: messaging/handlers/messages_post.handler
+    events:
+      - http:
+          path: messages
+          method: post
+          cors: true
+
+resources:
+  Resources:
+    MessagesDynamoDbTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Retain
+      Properties:
+        TableName: ${ssm:DB_TABLE_MESSAGES}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+
+plugins:
+  - serverless-python-requirements
+  - serverless-offline

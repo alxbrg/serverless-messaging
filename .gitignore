@@ -3,6 +3,18 @@ venv
 __pycache__
 .pytest_cache
 
+# Node
+package-lock.json
+yarn.lock
+.npm
+node_modules
+
+# Serverless directories
+.serverless
+
+# dotenv environment variables file
+.env
+
 # macOS
 .DS_Store*
 Icon?
