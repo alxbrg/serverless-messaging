@@ -9,7 +9,8 @@
     "url": "https://github.com/alxbrg/serverless-messaging.git"
   },
   "scripts": {
-    "start": "sls offline"
+    "start": "sls offline",
+    "test": "python -m pytest --disable-pytest-warnings tests/ -v"
   },
   "devDependencies": {
     "serverless": "^1.40.0",
