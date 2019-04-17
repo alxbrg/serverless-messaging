@@ -27,7 +27,7 @@ jobs:
 
       - run:
           name: Installing npm dependencies
-          command: npm install
+          command: yarn
 
       - save_cache:
           paths:
@@ -48,7 +48,7 @@ jobs:
           name: Running tests
           command: |
             . venv/bin/activate
-            npm run test
+            yarn test
 
   deploy:
     <<: *defaults
@@ -58,7 +58,7 @@ jobs:
 
       - run:
           name: Deploying
-          command: npm run deploy
+          command: yarn deploy
 
 workflows:
   version: 2
