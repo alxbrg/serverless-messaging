@@ -1,8 +1,13 @@
 # Serverless messaging
 
 A bare-bones messaging API implemented using Lambda functions written in Python, DynamoDB, SNS and SES.
+The [Serverless framework](https://serverless.com) is used to provision the Lambdas and the DynamoDB table.
 
 ## API Usage
+
+All requests must have a valid API key value set in the `x-api-key` header.
+
+_Note_: for demonstration purposes, a single key is configured to be generated.
 
 ### Send and store a message
 
@@ -34,13 +39,12 @@ __Query string__:
 ### Prerequisites
 
 - Have `python3`, `pip` and `virtualenv` installed
-- Have `node` and `npm` installed, as the project relies on the [Serverless framework](https://serverless.com)
-to spin the lambdas locally
+- Have `node` and `npm` installed, as the project relies on the Serverless to spin the lambdas locally
 - Have `docker` installed, to run a local DynamoDB container
 - Create a `.env` file at the root of the project (refer to the [example.env file](/example.env) for
 its content)
 - _Caveat_: the associated AWS account must be out of the SES sandbox to send emails to unverified
-email addresses.
+email addresses
 
 ### Install dependencies
 
@@ -96,8 +100,9 @@ automatically deployed when the `master` branch is updated.
 
 ## TODO
 
-- Handle security (configure: VPC, subnets, security groups, API Gateway usage plan with API Keys)
+- Handle security (configure: VPC, subnets, security groups)
 - Sanitize inputs
 - Add unit and integration tests
+- Format the API Gateway Error model to be consistent with the internal [ApiError class](/messaging/helpers/errors.py)
 - Optimize the lambdas (package them separately, exclude unwanted packages and files)
 - Document the code more
